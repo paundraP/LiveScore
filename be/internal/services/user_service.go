@@ -85,3 +85,26 @@ func (s *UserService) GetAllUser() (dto.GetAllUserResponse, error) {
 	}
 	return users, nil
 }
+
+func (s *UserService) UpdateUser(user_id string, req dto.UserUpdateRequest) (dto.UserResponse, error) {
+	user := models.User{
+		Username: req.Username,
+		Email:    req.Email,
+	}
+	update, err := s.userRepo.UpdateUser(user_id, user)
+	if err != nil {
+		return dto.UserResponse{}, err
+	}
+
+	return dto.UserResponse{
+		Username: update.Username,
+		Email:    update.Email,
+	}, nil
+}
+
+func (s *UserService) DeleteUser(user_id string) error {
+	if err := s.userRepo.DeleteUser(user_id); err != nil {
+		return err
+	}
+	return nil
+}

@@ -1,0 +1,16 @@
+[
+    {
+        "team_a": "Teknologi Informasi",
+        "score_a": 10,
+        "team_b": "Teknik Informatika",
+        "score_b": 8,
+        "start_date": "2024-12-20T15:00:00Z"
+    },
+    {
+        "team_a": "Sistem Informasi",
+        "score_a": 5,
+        "team_b": "Teknik Komputer",
+        "score_b": 7,
+        "start_date": "2024-12-21T10:00:00Z"
+    }
+]

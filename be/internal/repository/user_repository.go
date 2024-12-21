@@ -67,3 +67,18 @@ func (r *UserRepository) GetAllUser() (dto.GetAllUserResponse, error) {
 		Users: users,
 	}, nil
 }
+
+func (r *UserRepository) UpdateUser(user_id string, req models.User) (models.User, error) {
+	if err := r.db.Where("id = ?", user_id).Updates(&req).Error; err != nil {
+		return models.User{}, err
+	}
+	return req, nil
+}
+
+func (r *UserRepository) DeleteUser(user_id string) error {
+	var user models.User
+	if err := r.db.Where("id = ?", user_id).Delete(&user).Error; err != nil {
+		return err
+	}
+	return nil
+}

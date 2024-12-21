@@ -21,7 +21,7 @@ func SeedingUser(db *gorm.DB) error {
 
 	var users []models.User
 	if err := json.NewDecoder(file).Decode(&users); err != nil {
-		log.Fatalf("Error deoding seed data: %v", err)
+		log.Fatalf("Error decoding seed data: %v", err)
 		return err
 	}
 	for i, user := range users {

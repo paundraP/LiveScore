@@ -14,5 +14,7 @@ func User(app *gin.Engine, userHandler handler.UserHandler) {
 		userRoutes.POST("/login", userHandler.Login)
 		userRoutes.GET("/", middleware.AuthMiddleware(), userHandler.Me)
 		userRoutes.GET("/all", middleware.AuthMiddleware(), middleware.OnlyAdmin("admin"), userHandler.GetAllUser)
+		userRoutes.PATCH("/", middleware.AuthMiddleware(), userHandler.UpdateUser)
+		userRoutes.DELETE("/", middleware.AuthMiddleware(), userHandler.DeleteUser)
 	}
 }

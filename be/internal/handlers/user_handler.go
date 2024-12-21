@@ -98,3 +98,40 @@ func (h *UserHandler) GetAllUser(c *gin.Context) {
 		"data":    result,
 	})
 }
+
+func (h *UserHandler) UpdateUser(c *gin.Context) {
+	user_id := c.MustGet("user_id").(string)
+	var req dto.UserUpdateRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	result, err := h.userService.UpdateUser(user_id, req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "failed update user",
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "success update user",
+		"data":    result,
+	})
+}
+
+func (h *UserHandler) DeleteUser(c *gin.Context) {
+	user_id := c.MustGet("user_id").(string)
+	result := h.userService.DeleteUser(user_id)
+	if result != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "failed delete user",
+			"message": result.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "success delete user",
+	})
+}

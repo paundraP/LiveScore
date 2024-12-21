@@ -35,4 +35,8 @@ type (
 	GetAllUserResponse struct {
 		Users []models.User
 	}
+	UserUpdateRequest struct {
+		Username string `json:"username"`
+		Email    string `json:"email"`
+	}
 )

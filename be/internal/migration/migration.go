@@ -10,6 +10,7 @@ import (
 func Migrate(db *gorm.DB) error {
 	err := db.AutoMigrate(
 		&models.User{},
+		&models.Match{},
 	)
 	if err != nil {
 		log.Fatalf("Error migrate the database: %v", err)

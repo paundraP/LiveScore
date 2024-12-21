@@ -1,6 +1,6 @@
 ## Livescore App
 
-Front-end: React, Javascript
+Front-end: [dont know, :) ]
 
 Back-end: Gin, Golang
 

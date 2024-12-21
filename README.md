@@ -1,6 +1,6 @@
 ## Livescore App
 
-Front-end: [dont know, :) ]
+Front-end: dont know, :)
 
 Back-end: Gin, Golang
 

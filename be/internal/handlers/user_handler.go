@@ -11,13 +11,13 @@ import (
 
 type UserHandler struct {
 	log         *logrus.Logger
-	userService services.UserService
+	UserService services.UserService
 }
 
 func NewUser(log *logrus.Logger, userService services.UserService) UserHandler {
 	return UserHandler{
 		log:         log,
-		userService: userService,
+		UserService: userService,
 	}
 }
 
@@ -28,7 +28,7 @@ func (h *UserHandler) Register(c *gin.Context) {
 		return
 	}
 
-	result, err := h.userService.Register(req)
+	result, err := h.UserService.Register(req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Registration failed",
@@ -50,7 +50,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 		return
 	}
 
-	result, err := h.userService.Login(req)
+	result, err := h.UserService.Login(req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Login failed",
@@ -68,7 +68,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 func (h *UserHandler) Me(c *gin.Context) {
 	user_id := c.MustGet("user_id").(string)
 
-	result, err := h.userService.GetUserByID(user_id)
+	result, err := h.UserService.GetUserByID(user_id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "failed get user",
@@ -84,7 +84,7 @@ func (h *UserHandler) Me(c *gin.Context) {
 }
 
 func (h *UserHandler) GetAllUser(c *gin.Context) {
-	result, err := h.userService.GetAllUser()
+	result, err := h.UserService.GetAllUser()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "failed get all user",
@@ -106,7 +106,7 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	result, err := h.userService.UpdateUser(user_id, req)
+	result, err := h.UserService.UpdateUser(user_id, req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "failed update user",
@@ -123,7 +123,7 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 
 func (h *UserHandler) DeleteUser(c *gin.Context) {
 	user_id := c.MustGet("user_id").(string)
-	result := h.userService.DeleteUser(user_id)
+	result := h.UserService.DeleteUser(user_id)
 	if result != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "failed delete user",

@@ -25,15 +25,17 @@ func NewApp() AppConfig {
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
+
 	app := gin.Default()
 	log := logrus.New()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"}, // Replace with your front-end URL if needed
+		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
 	}))
+
 	// Handle OPTIONS pre-flight requests for CORS
 	app.OPTIONS("/*any", func(c *gin.Context) {
 		c.AbortWithStatus(204)
@@ -50,12 +52,15 @@ func NewApp() AppConfig {
 
 	// Repositories
 	userRepository := repository.NewUser(db)
+	matchRepository := repository.NewMatchRepository(db)
 
 	// Services
 	userService := services.NewUser(userRepository)
+	matchService := services.NewMatchService(matchRepository)
 
 	// Initialize handlers
 	userHandler := handler.NewUser(log, userService)
+	matchHandler := handler.NewMatchHandler(matchService, log)
 
 	// Testing routes
 	app.GET("/api/ping", func(c *gin.Context) {
@@ -66,6 +71,7 @@ func NewApp() AppConfig {
 
 	// Set up routes
 	router.User(app, userHandler)
+	router.MatchRouter(app, matchHandler)
 	router.TestingRouter(app)
 
 	return AppConfig{
